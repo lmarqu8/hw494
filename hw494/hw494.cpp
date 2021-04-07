@@ -21,16 +21,16 @@ int path2distance(const vector<vector<int>> &inputMat, const vector<int> &path, 
     return dist;
 }
 
-bool checkIfVisited(int citiesVisited, int city_ID){
-    int a = 1;
+void printTour(vector<int> vec){
+    for (auto i: vec)
+        std::cout << i << ' ';
+}
 
-    if (city_ID == 1){
-        return 1 & citiesVisited;
-    }
-    else {
-        a = a << city_ID;
-        return citiesVisited & a;
-    }
+bool checkIfVisited(int citiesVisited, int city_ID){
+    if (citiesVisited & (1 << (city_ID - 1)))
+        return true;
+    else
+        return false;
 }
 
 void markBitVisited(int &citiesVisited, int city_ID){
@@ -48,10 +48,20 @@ void markBitVisited(int &citiesVisited, int city_ID){
 }
 
 int find_next(int currentCity, int visited, vector<vector<int>> inputMap){
-    int numCities
-    for (int i = 0; i < ; ++i) {
-        if(check)
+    int numCities = inputMap.size();
+    int nextCity = 0;
+    int shortestDist = INT_MAX;
+
+    for (int i = 1; i < numCities+1; ++i) {
+        if(!checkIfVisited(visited, i)){
+            if(shortestDist > inputMap[currentCity-1][i-1] && inputMap[currentCity-1][i-1] != 0){
+                shortestDist = inputMap[currentCity-1][i-1];
+                nextCity = i;
+            }
+        }
     }
+
+    return nextCity;
 
 }
 
@@ -59,9 +69,11 @@ void tsp(vector<vector<int>> inputMat){
 
     int numCities = inputMat.size();
     int tripCost = 0;
+    int bestCost = INT_MAX;
     int visited = 0;
-    int allVisited = pow(2, numCities);
-    int next;
+    int allVisited = pow(2, numCities) - 1;
+    int next = 0;
+    int start;
     vector<int> tour;
     vector<int> bestTour;
 
@@ -72,25 +84,43 @@ void tsp(vector<vector<int>> inputMat){
     if (numCities != inputMat[0].size()){cout<<"ERROR: Input is not square"<<endl; exit(1);}
     if(numCities > 32){ cout<<"ERROR: Only two cities"<<endl; exit(1);}
 
+    cout<<"end value is: " << allVisited << endl;
 
-    int start = 0;
-    for (int i = 0; i < numCities; ++i) {
+
+    for (int i = 1; i < numCities+1; ++i) {
         visited = 0;
-        start = i;
-        markBitVisited(visited, start+1);
+        tripCost = 0;
         tour.clear();
-        tour.push_back(i+1);
 
-        //while (visited != b){}
+        start = i;
+        markBitVisited(visited, start);
+        tour.push_back(start);
 
-        //tripCost+=inputMat[next][start];
+        while (visited != allVisited){
+            cout<<tour.back()<< " " << bitset<8>(visited) << " -> ";
+            next = find_next(tour.back(), visited, inputMat);
+            tripCost+=inputMat[next-1][tour.back()];
+            tour.push_back(next);
+            markBitVisited(visited,next);
+
+            if (tripCost > bestCost){ break;}
+
+        }
+        //should have visited all cities or tour should be worse than current best, scrapping it early.
+        tour.push_back(i);
+        tripCost+=inputMat[next-1][start-1];
+        cout<<tour.back()<< " " << "Cost :" << tripCost<< endl;
+        if (tripCost < bestCost){
+            bestCost = tripCost;
+            bestTour = tour;
+        }
+
 
     }
 
-
-
-
-
+    cout<<"The best tour is: ";
+    printTour(bestTour);
+    cout<< "with distance: " << bestCost << endl;
     cout<<"End TSP"<<endl;
 }
 
@@ -140,28 +170,13 @@ int main()
         cout << endl;
     }
     */
-    vector<vector<int>> tempVec(inputVec);
+    int one = 0;
+    markBitVisited(one, 1);
+    markBitVisited(one, 3);
+    markBitVisited(one, 5);
+    cout << one << " " << bitset<8>(one) << endl;
 
-    std::vector<int> testPath = { 1,4,3,5,2 };
-
-    int five = 0;
-    markBitVisited(five, 1);
-    cout<<(five)<<endl;
-    cout<<bitset<5>(five)<<endl;
-    markBitVisited(five, 2);
-    cout<<(five)<<endl;
-    cout<<bitset<5>(five)<<endl;
-    markBitVisited(five, 3);
-    cout<<(five)<<endl;
-    cout<<bitset<5>(five)<<endl;
-    markBitVisited(five, 4);
-    cout<<(five)<<endl;
-    cout<<bitset<5>(five)<<endl;
-    markBitVisited(five, 5);
-    cout<<(five)<<endl;
-    cout<<bitset<5>(five)<<endl;
-
-
+    cout << checkIfVisited(one, 1) << " " << checkIfVisited(one, 2) << endl;
 
 
     tsp(inputVec);

@@ -9,11 +9,11 @@
 
 using namespace std;
 
-
+//Used to check for correct vector input, no used currently
+//Takes a the input matrix, a path, and the number of cities.
 int path2distance(const vector<vector<int>> &inputMat, const vector<int> &path, int numCities) {
 
     int dist = 0;
-
     for (size_t i = 1; i < numCities; i++)
     {
         dist += inputMat[path[i - 1] - 1][path[i] - 1];
@@ -21,10 +21,12 @@ int path2distance(const vector<vector<int>> &inputMat, const vector<int> &path, 
     return dist;
 }
 
+//Prints the values in the tour vector.
 void printTour(vector<int> vec){
     for (auto i: vec)
         std::cout << i << ' ';
 }
+
 
 bool checkIfVisited(int citiesVisited, int city_ID){
     if (citiesVisited & (1 << (city_ID - 1)))
@@ -95,21 +97,20 @@ void tsp(vector<vector<int>> inputMat){
         start = i;
         markBitVisited(visited, start);
         tour.push_back(start);
-
+        cout<<"at: " << tour.back()<< " cost: "<< tripCost <<" -> ";
         while (visited != allVisited){
-            cout<<tour.back()<< " " << bitset<8>(visited) << " -> ";
+
+            //if (tripCost > bestCost){ break;}
             next = find_next(tour.back(), visited, inputMat);
-            tripCost+=inputMat[next-1][tour.back()];
+            tripCost+=inputMat[next-1][tour.back()-1];
             tour.push_back(next);
             markBitVisited(visited,next);
-
-            if (tripCost > bestCost){ break;}
-
+            cout<<"at: " << tour.back()<< " cost: "<< tripCost << " -> ";
         }
-        //should have visited all cities or tour should be worse than current best, scrapping it early.
+        //should have visited all cities
         tour.push_back(i);
-        tripCost+=inputMat[next-1][start-1];
-        cout<<tour.back()<< " " << "Cost :" << tripCost<< endl;
+        tripCost+=inputMat[start-1][next-1];
+        cout<<"at: " << tour.back()<< " total: "<< tripCost << " tally: " << bitset<5>(visited) << " END COST: " << tripCost << endl;
         if (tripCost < bestCost){
             bestCost = tripCost;
             bestTour = tour;
@@ -160,7 +161,7 @@ int main()
     else cout<<"file not opened" << endl;
     inputFile.close();
 
-    /*
+
      for (size_t i = 0; i < numCities; i++)
     {
         for (size_t j = 0; j < numCities; j++)
@@ -169,18 +170,17 @@ int main()
         }
         cout << endl;
     }
-    */
+
     int one = 0;
     markBitVisited(one, 1);
     markBitVisited(one, 3);
     markBitVisited(one, 5);
-    cout << one << " " << bitset<8>(one) << endl;
+    cout << one << " " << bitset<5>(one) << endl;
 
     cout << checkIfVisited(one, 1) << " " << checkIfVisited(one, 2) << endl;
 
 
     tsp(inputVec);
-    //cout << path2distance(tempVec, testPath, numCities) << endl << "reached end" << endl;
 
   return 69;
 }

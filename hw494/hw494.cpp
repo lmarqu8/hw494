@@ -97,20 +97,22 @@ void tsp(vector<vector<int>> inputMat){
         start = i;
         markBitVisited(visited, start);
         tour.push_back(start);
-        cout<<"at: " << tour.back()<< " cost: "<< tripCost <<" -> ";
+        //cout<<"at: " << tour.back()<< " cost: "<< tripCost <<" -> ";
         while (visited != allVisited){
 
-            //if (tripCost > bestCost){ break;}
+            if (tripCost > bestCost){
+                cout << "Finished before end" << endl;
+                break;}
             next = find_next(tour.back(), visited, inputMat);
             tripCost+=inputMat[next-1][tour.back()-1];
             tour.push_back(next);
             markBitVisited(visited,next);
-            cout<<"at: " << tour.back()<< " cost: "<< tripCost << " -> ";
+            //cout<<"at: " << tour.back()<< " cost: "<< tripCost << " -> ";
         }
         //should have visited all cities
         tour.push_back(i);
         tripCost+=inputMat[start-1][next-1];
-        cout<<"at: " << tour.back()<< " total: "<< tripCost << " tally: " << bitset<5>(visited) << " END COST: " << tripCost << endl;
+        //cout<<"at: " << tour.back()<< " total: "<< tripCost << " tally: " << bitset<5>(visited) << " END COST: " << tripCost << endl;
         if (tripCost < bestCost){
             bestCost = tripCost;
             bestTour = tour;
@@ -128,7 +130,7 @@ void tsp(vector<vector<int>> inputMat){
 int main()
 {
     std::fstream inputFile;
-    inputFile.open("tsp1.txt");
+    inputFile.open("tsp2.txt");
     int numCities = 0;
     vector<vector<int>> inputVec;
     int countA = 0;
@@ -161,7 +163,7 @@ int main()
     else cout<<"file not opened" << endl;
     inputFile.close();
 
-
+    /*
      for (size_t i = 0; i < numCities; i++)
     {
         for (size_t j = 0; j < numCities; j++)
@@ -176,10 +178,8 @@ int main()
     markBitVisited(one, 3);
     markBitVisited(one, 5);
     cout << one << " " << bitset<5>(one) << endl;
-
     cout << checkIfVisited(one, 1) << " " << checkIfVisited(one, 2) << endl;
-
-
+    */
     tsp(inputVec);
 
   return 69;

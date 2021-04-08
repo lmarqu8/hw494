@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "C:/Users/louis/Documents/GitHub/hw494/hw494/hw494.cpp" "C:/Users/louis/Documents/GitHub/hw494/cmake-build-debug/CMakeFiles/hw494.dir/hw494/hw494.cpp.obj"
+  "C:/Users/Louis/Documents/GitHub/hw494/hw494/hw494.cpp" "C:/Users/Louis/Documents/GitHub/hw494/cmake-build-debug/CMakeFiles/hw494.dir/hw494/hw494.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

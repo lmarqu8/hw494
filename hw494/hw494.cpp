@@ -117,8 +117,6 @@ void tsp(vector<vector<int>> inputMat){
             bestCost = tripCost;
             bestTour = tour;
         }
-
-
     }
 
     cout<<"The best tour is: ";
@@ -130,14 +128,14 @@ void tsp(vector<vector<int>> inputMat){
 int main()
 {
     std::fstream inputFile;
-    inputFile.open("tsp2.txt");
+    inputFile.open("tsp3.txt");
     int numCities = 0;
     vector<vector<int>> inputVec;
     int countA = 0;
     string temp;
     
     if (inputFile.is_open()) {
-        //cout<<"file is open" << endl;
+        cout<<"file is open" << endl;
         string numCitiesC;
         getline(inputFile, numCitiesC);
 
@@ -172,7 +170,8 @@ int main()
         }
         cout << endl;
     }
-
+     */
+    /*
     int one = 0;
     markBitVisited(one, 1);
     markBitVisited(one, 3);

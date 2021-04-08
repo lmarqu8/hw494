@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/louis/Documents/GitHub/hw494/hw494/hw494.cpp
+iostream
+-
+fstream
+-
+string
+-
+vector
+-
+sstream
+-
+bitset
+-
+cmath
+-
+

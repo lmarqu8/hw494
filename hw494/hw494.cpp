@@ -5,16 +5,18 @@
 #include <sstream>
 #include <bitset>
 #include <cmath>
+#include <chrono>
 
 
 using namespace std;
 
 //Used to check for correct vector input, no used currently
 //Takes a the input matrix, a path, and the number of cities.
+
 int path2distance(const vector<vector<int>> &inputMat, const vector<int> &path, int numCities) {
 
     int dist = 0;
-    for (size_t i = 1; i < numCities; i++)
+    for (size_t i = 1; i < numCities+1; i++)
     {
         dist += inputMat[path[i - 1] - 1][path[i] - 1];
     }
@@ -67,7 +69,7 @@ int find_next(int currentCity, int visited, vector<vector<int>> inputMap){
 
 }
 
-void tsp(vector<vector<int>> inputMat){
+vector<int> tsp(vector<vector<int>> inputMat){
 
     int numCities = inputMat.size();
     int tripCost = 0;
@@ -119,16 +121,13 @@ void tsp(vector<vector<int>> inputMat){
         }
     }
 
-    cout<<"The best tour is: ";
-    printTour(bestTour);
-    cout<< "with distance: " << bestCost << endl;
-    cout<<"End TSP"<<endl;
+    return bestTour;
 }
 
 int main()
 {
     std::fstream inputFile;
-    inputFile.open("tsp3.txt");
+    inputFile.open("tsp31.txt");
     int numCities = 0;
     vector<vector<int>> inputVec;
     int countA = 0;
@@ -179,8 +178,18 @@ int main()
     cout << one << " " << bitset<5>(one) << endl;
     cout << checkIfVisited(one, 1) << " " << checkIfVisited(one, 2) << endl;
     */
-    tsp(inputVec);
+    vector<int> bestTour;
+    auto start = std::chrono::steady_clock::now();
+    bestTour = tsp(inputVec);
+    auto end = std::chrono::steady_clock::now();
+    int bestCost = path2distance(inputVec, bestTour, numCities);
+    cout << "Time elapsed = " << chrono::duration_cast<chrono::nanoseconds>(end - start).count() << endl;
+    cout<<"The best tour is: ";
+    printTour(bestTour);
+    cout<< "with distance: " << bestCost << endl;
+    cout<<"End TSP"<<endl;
 
-  return 69;
+
+    return 69;
 }
 

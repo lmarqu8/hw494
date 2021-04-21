@@ -130,8 +130,6 @@ void tsp(vector<vector<int>> inputMat){
 int main()
 {
     std::fstream inputFile;
-    inputFile.open("tsp2.txt");
-=======
 
     inputFile.open("r30_1.txt");
     int numCities = 0;

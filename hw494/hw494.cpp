@@ -130,7 +130,10 @@ void tsp(vector<vector<int>> inputMat){
 int main()
 {
     std::fstream inputFile;
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     inputFile.open("r30_1.txt");
     int numCities = 0;
     vector<vector<int>> inputVec;

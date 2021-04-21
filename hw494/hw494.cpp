@@ -134,7 +134,6 @@ int main()
     inputFile.open("tsp2.txt");
 =======
     inputFile.open("r30_1.txt");
->>>>>>> Stashed changes
     int numCities = 0;
     vector<vector<int>> inputVec;
     int countA = 0;
